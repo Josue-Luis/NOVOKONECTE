@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konecte</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="A Konecte conecta você com internet e TV de qualidade. Simule seu plano e conheça nossa missão, visão e valores.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+<!-- Barra superior -->
+<div class="top-bar">
+
+
+    <div class="logo">
+        <a href="site.html"><img src="logo-konecte.png" alt="Logo Konecte"></a>
+    </div>
+
+    <div class="icons">
+        <a href="equipe.html" class="link-equipe">Nossa Equipe</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Banner  -->
+    <div class="slider">
+        <div class="slides">
+            <div class="slide"><img src="promo1.jpg.jpg" alt="Banner 1"></div>
+            <div class="slide"><img src="promo2.jpg.jpg" alt="Banner 2"></div>
+            <div class="slide"><img src="promo3.jpg.jpg" alt="Banner 3"></div>
+        </div>
+    </div>
+
+    <!-- Nome da empresa -->
+    <div class="company-name">
+        <h1><mark>Konecte: <br>
+            Internet Inteligente </mark></h1>
+    </div>
+
+
+    <div class="simuladores-container">
+
+        <!-- Simulador de Internet -->
+        <div class="simulador-plano">
+            <h2>Simule seu Plano de Internet</h2>
+            <label for="gbInput">Quantos GB você precisa?</label>
+            <input type="number" id="gbInput" placeholder="Ex: 10" min="1" max="1000">
+            <button onclick="calcularPlano()">Calcular</button>
+            <p id="resultado"></p>
+        </div>
+
+        <!-- Simulador de TV  -->
+        <div class="simulador-plano">
+            <h2>Simule seu Plano de TV</h2>
+            <label for="canaisInput">Quantos canais você deseja?</label>
+            <input type="number" id="canaisInput" placeholder="Ex: 100" min="1" max="500">
+            <button onclick="calcularTv()">Calcular</button>
+            <p id="resultadoTv"></p>
+        </div>
+
+    </div>
+
+    <!-- Aviso  -->
+    <div class="aviso-simulacao">
+        <p><strong>Aviso:</strong> Esta é apenas uma simulação. Para contratar um plano, entre em contato pelo <strong>0800 123 456</strong>.</p>
+    </div>
+
+
+
+    <div class="section-mvv">
+
+        <!-- Missão -->
+        <div class="mvv bloco">
+            <div class="mvv-img">
+                <img src="missao.jpg" alt="Ilustração representando a missão da Konecte">
+            </div>
+            <div class="mvv-texto">
+                <h2>Missão:</h2>
+                <p>Nossa missão é conectar pessoas com qualidade, acessibilidade e inovação.
+                    Trabalhamos para oferecer chips de celular com excelente cobertura, desempenho confiável e planos que cabem no bolso.
+                    Queremos garantir que todos os nossos usuários — independentemente de onde estejam — tenham acesso a uma comunicação eficiente,
+                    prática e acessível, acompanhando as transformações do mundo digital e tornando a conexão algo simples e ao alcance de todos..</p>
+            </div>
+        </div>
+
+        <!-- Visão -->
+        <div class="mvv bloco">
+            <div class="mvv-img">
+                <img src="visao.jpg" alt="Ilustração representando a Visão da Konecte">
+            </div>
+            <div class="mvv-texto">
+                <h2>Visão:</h2>
+                <p>
+                    Ser reconhecida como a operadora de chips mais confiável e inovadora do mercado, oferecendo tecnologia de ponta, cobertura de qualidade e uma experiência de
+                    conectividade eficiente, estável e acessível. Buscamos alcançar todos os cantos do país, conectando pessoas, ideias e oportunidades,
+                    sempre com foco na excelência, na confiança dos nossos clientes e na evolução constante dos nossos serviços..
+                </p>
+            </div>
+        </div>
+
+
+        <!-- Valores -->
+        <div class="mvv bloco">
+            <div class="mvv-img">
+                <img src="valores.jpg" alt="Ilustração representando os Valores da Konecte">
+            </div>
+            <div class="mvv-texto">
+                <h2>Valores:</h2>
+
+                <li>Inovação: Buscamos sempre novas soluções para melhorar a comunicação.<br><br></li>
+
+
+                <li>Qualidade: Garantimos excelência nos nossos produtos e serviços.<br><br></li>
+
+
+                <li>Acessibilidade: Planos para todos os perfis de clientes.<br><br></li>
+
+
+                <li>Compromisso: Atendimento ágil e suporte eficiente.<br></li>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- SOBRE A EMPRESA -->
+    <div class="sobre-empresa">
+        <h2>Sobre a Empresa</h2>
+        <p id="textoEmpresa">
+            A Konecte nasceu em 2018 com o sonho de levar internet e conectividade de qualidade para comunidades que estavam fora do radar das grandes operadoras.
+            O projeto começou pequeno, com apenas dois técnicos, um notebook e muita vontade de fazer diferente.
+            <span id="maisTexto" style="display: none;">
+      Com o tempo, a Konecte foi crescendo, expandindo seus serviços e investindo em tecnologia de ponta para garantir estabilidade e cobertura cada vez melhores.
+      Hoje, contamos com uma equipe altamente capacitada, infraestrutura moderna e um compromisso firme com a inclusão digital.
+      Atendemos milhares de clientes em diversas regiões do país, sempre buscando inovação, preços acessíveis e um atendimento humano, próximo e eficiente.
+      Mais do que oferecer planos de internet e TV, a Konecte quer conectar pessoas, sonhos e oportunidades.
+    </span>
+        </p>
+        <button class="ler-mais" onclick="mostrarMais()">Ler mais</button>
+
+        <div class="certificados">
+            <img src="medalha1.png" alt="Certificado 1">
+            <img src="medalha2.png" alt="Certificado 2">
+        </div>
+    </div>
+
+
+    <!-- Barra Inferior -->
+    <div class="bottom-bar">
+        <div class="email">
+            <a href="mailto:suporte@konecte.com.br"><img src="icon-email.png" alt="Email"></a>
+            suporte@konecte.com.br
+        </div>
+
+
+        <div class="icons">
+            <a href="https://br.linkedin.com/"><img src="icon-linkedin.png" alt="Linkedin"></a>
+            <a href="#https://web.whatsapp.com/"><img src="icon-whatsapp.png" alt="WhatsApp"></a>
+            <a href="https://www.instagram.com/"><img src="icon-instagram.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/?locale=pt_BR"><img src="icon-face.png" alt="Facebook"></a>
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+        function calcularPlano() {
+        const precoPorGB = 4.90;
+        const gb = parseInt(document.getElementById("gbInput").value);
+        const resultado = document.getElementById("resultado");
+
+        if (isNaN(gb) || gb <= 0 || gb > 1000) {
+          resultado.textContent = "Digite um valor entre 1 e 1000 GB.";
+          return;
+        }
+
+        const total = (gb * precoPorGB).toFixed(2);
+        resultado.textContent = `Valor estimado do plano de internet: R$ ${total}`;
+      }
+
+      function calcularTv() {
+        const precoPorCanal = 1.20;
+        const canais = parseInt(document.getElementById("canaisInput").value);
+        const resultadoTv = document.getElementById("resultadoTv");
+
+        if (isNaN(canais) || canais <= 0 || canais > 500) {
+          resultadoTv.textContent = "Digite um número entre 1 e 500 canais.";
+          return;
+        }
+
+        const totalTv = (canais * precoPorCanal).toFixed(2);
+        resultadoTv.textContent = `Valor estimado do plano de TV: R$ ${totalTv}`;
+      }
+
+      function mostrarMais() {
+      const maisTexto = document.getElementById("maisTexto");
+      const botao = document.querySelector(".ler-mais");
+
+      if (maisTexto.style.display === "none") {
+        maisTexto.style.display = "inline";
+        botao.textContent = "Mostrar menos";
+      } else {
+        maisTexto.style.display = "none";
+        botao.textContent = "Ler mais";
+      }
+      }
+
+
+    </script>
+</body>
+</html>
