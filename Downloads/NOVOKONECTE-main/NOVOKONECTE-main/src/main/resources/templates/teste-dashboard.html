@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konecta - Dashboard de Serviços</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis CSS para gerenciamento de cores */
+        :root {
+            --konecta-blue: #004aad; /* Azul principal */
+            --konecta-dark: #003680; /* Azul escuro do footer */
+            --konecta-orange: #ff7f00; /* Laranja/Cobre para Call-to-Action */
+            --background-light: #f4f7f9;
+            --text-dark: #333;
+            --danger-red: #e74c3c;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--konecta-blue);
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        header img {
+            height: 40px;
+        }
+
+        /* Menu de Navegação */
+        nav a {
+            color: white;
+            margin-left: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--konecta-orange);
+        }
+
+        .logout-btn {
+            background-color: var(--danger-red);
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* --- CSS DO HERO BANNER --- */
+        .hero-banner {
+            width: 100%;
+            height: 400px; /* Mais alto para mais impacto */
+
+            /* >>> CAMINHO DA IMAGEM CORRIGIDO AQUI <<< */
+            background-image: url('/img/promo.png'); /* Substitua 'fundo-fibra.jpg' pelo nome real do seu arquivo */
+
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* Overlay escuro para o texto se destacar */
+        }
+
+        .banner-content {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            z-index: 10;
+            color: white;
+            max-width: 650px;
+            text-align: left;
+        }
+
+        .banner-content h1 {
+            font-size: 3.5em; /* Título maior */
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            line-height: 1.1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .banner-content h1 strong {
+            color: var(--konecta-orange); /* Destaque a palavra chave com a cor de CTA */
+        }
+
+        .banner-content p {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            font-weight: 300;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+        /* --- FIM DO CSS PARA HERO BANNER --- */
+
+
+        /* Seções Gerais */
+        .section {
+            padding: 40px 5%;
+        }
+
+        h2 {
+            color: var(--konecta-blue);
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* Sombra mais suave */
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Layout Flex e Grid para Missão/Visão */
+        .grid-2 {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .grid-2 > * {
+            flex: 1;
+            min-width: 300px; /* Garante que não quebre em telas pequenas */
+        }
+
+        /* 💡 NOVO CSS PARA CORRIGIR PROPORÇÃO DAS IMAGENS 💡 */
+        .img-box {
+            /* Define uma altura mínima para o contêiner da imagem */
+            min-height: 320px; /* Garante altura uniforme com o card de texto */
+
+            /* Configura o contêiner para posicionar a imagem */
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%; /* Força a imagem a preencher a altura do contêiner */
+
+            /* object-fit: cover garante que a imagem preencha o espaço sem distorcer, cortando o excesso */
+            object-fit: cover;
+
+            /* object-position: center; garante que o centro da imagem seja o foco */
+            object-position: center;
+
+            border-radius: 0; /* Remove a borda arredondada da imagem (já está no .img-box) */
+            box-shadow: none;
+        }
+        /*  FIM DO NOVO CSS  */
+
+
+        /* Estilo dos Botões */
+        button {
+            background-color: var(--konecta-orange);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e07200;
+        }
+
+        /* Botão Secundário (Ler Mais) */
+        .secondary-btn {
+            background-color: var(--konecta-blue);
+            margin-top: 15px;
+            display: inline-block;
+            margin-left: 0;
+        }
+        .secondary-btn:hover {
+            background-color: var(--konecta-dark);
+        }
+
+        input[type="number"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            width: 180px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        /* Estilo para a mensagem de simulação (Feedback) */
+        .simulation-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e0f2f1;
+            border-left: 5px solid #009688;
+            border-radius: 6px;
+            font-weight: 600;
+            display: none;
+            color: var(--text-dark);
+        }
+
+        /* Estilo para Feature Cards (Simulação e Serviços) */
+        .feature-cards {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .feature-cards .card {
+            flex: 1;
+            border-top: 5px solid var(--konecta-orange);
+            padding-top: 25px;
+        }
+        .feature-cards label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--konecta-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--konecta-dark);
+            color: white;
+            text-align: center;
+            padding: 30px 5%;
+            margin-top: 50px;
+            border-top: 5px solid var(--konecta-orange);
+        }
+
+        footer img {
+            width: 30px;
+            margin: 0 12px;
+            filter: brightness(0) invert(1);
+            transition: transform 0.3s;
+        }
+        footer img:hover {
+            transform: scale(1.1);
+        }
+        footer p {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        /* Responsividade Móvel */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 5%;
+                gap: 15px;
+            }
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                margin: 5px 10px;
+            }
+            .grid-2 {
+                flex-direction: column;
+            }
+            .grid-2 > * {
+                min-width: 100%;
+            }
+            .feature-cards {
+                flex-direction: column;
+            }
+            input[type="number"] {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            /* Ajuste responsivo para Hero Banner */
+            .banner-content h1 {
+                font-size: 2.2em;
+            }
+            .banner-content {
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                max-width: 90%;
+            }
+            button {
+                margin-left: 0;
+            }
+            /* Garante que as imagens sejam menores em telas pequenas */
+            .img-box {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img th:src="@{/img/logo.png}" alt="Logo Konecta" class="logo-image">
+    <nav>
+        <a href="#">Início</a>
+        <a href="#">Planos</a>
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+    </nav>
+    <div class="user-controls">
+        <span style="margin-right: 15px; font-weight: 600; color: white;">
+            Olá, Josué Luís!
+        </span>
+        <form th:action="@{/logout}" method="get">
+            <button type="submit" class="logout-btn">Sair</button>
+        </form>
+    </div>
+</header>
+<section class="section" style="padding-top: 20px;">
+    <h2 style="border-bottom: 2px solid var(--konecta-orange);">Seu Painel de Serviços</h2>
+
+    <div class="feature-cards">
+
+        <div class="card" style="border-top-color: var(--konecta-blue);">
+            <h3 style="color: var(--konecta-blue); margin-top: 0;">Plano Atual</h3>
+            <p style="font-size: 1.1em; font-weight: 600;" th:text="${plano}">Premium 500 Mega</p>
+            <p>Status: <span style="color: #2ecc71; font-weight: 700;">ATIVO</span></p>
+            <button class="secondary-btn" style="background-color: #2ecc71;">Mudar Plano</button>
+        </div>
+
+        <div class="card" style="border-top-color: var(--danger-red);">
+            <h3 style="color: var(--konecta-blue); margin-top: 0;">Próxima Fatura</h3>
+            <p style="font-size: 1.5em; font-weight: 700; color: var(--danger-red);">
+                R$ <span th:text="${#numbers.formatDecimal(valorFatura, 1, 2)}">179.90</span>
+            </p>
+            <p>Vencimento: <span th:text="${vencimentoFatura}">15/12/2025</span></p>
+            <button class="secondary-btn">Pagar Agora</button>
+        </div>
+
+        <div class="card" style="border-top-color: var(--konecta-orange);">
+            <h3 style="color: var(--konecta-blue); margin-top: 0;">Precisa de Ajuda?</h3>
+            <p>Abrir um chamado técnico ou falar com um atendente:</p>
+            <button style="background-color: var(--konecta-orange);">Abrir Chamado</button>
+            <p style="margin-top: 15px; font-size: 0.9em;">Telefone: 0800 555-KTA</p>
+        </div>
+    </div>
+</section>
+<div class="hero-banner">
+    <div class="banner-content">
+        <h1>Conectividade que **Transforma** sua vida.</h1>
+        <p>Internet de ultravelocidade e TV de alta definição de verdade, feito para sua casa.</p>
+        <button onclick="document.getElementById('gb').focus()">Descubra Seu Plano</button>
+    </div>
+</div>
+<section class="section">
+    <h2>Simule e Encontre o Plano Perfeito</h2>
+
+    <div class="feature-cards">
+
+        <div class="card" style="border-top-color: #2ecc71;"> <label for="gb">Quantos GB de Internet você precisa?</label>
+            <input type="number" id="gb" placeholder="Ex: 50 GB" value="50">
+            <button onclick="simularInternet()">Calcular Internet</button>
+            <div id="internet-result" class="simulation-result"></div>
+        </div>
+
+        <div class="card" style="border-top-color: #3498db;"> <label for="tv">Quantos Canais de TV você deseja?</label>
+            <input type="number" id="tv" placeholder="Ex: 150 canais" value="150">
+            <button onclick="simularTV()">Calcular TV</button>
+            <div id="tv-result" class="simulation-result"></div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="grid-2">
+        <div class="img-box">
+            <img th:src="@{/img/missao.png}" alt="Missão Konecta">
+        </div>
+
+        <div class="card">
+            <h2 style="margin-top: 0; border-bottom: none; color: var(--konecta-dark);">Nossa Missão</h2>
+            <p>
+                Nossa missão na Konecta é **redefinir a conectividade**. Existimos para fornecer acesso à internet de ultravelocidade e serviços de comunicação confiáveis, unindo pessoas, empresas e comunidades. Comprometemo-nos a operar com transparência e inovação contínua, garantindo que cada cliente tenha a melhor experiência digital possível.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="grid-2">
+        <div class="card">
+            <h2 style="margin-top: 0; border-bottom: none; color: var(--konecta-dark);">Nossa Visão</h2>
+            <p>
+                Ser reconhecida, até 2030, como a **operadora de telecomunicações líder** em satisfação do cliente no Brasil. Buscamos ser o benchmark em inovação tecnológica e sustentabilidade, expandindo nossa rede de fibra óptica para 90% dos municípios, e facilitando a próxima geração de comunicação (IoT, 5G, etc.).
+            </p>
+        </div>
+
+        <div class="img-box">
+            <img th:src="@{/img/visao.png}" alt="Visão Konecta">
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Sobre a Konecta: Conectando o Futuro</h2>
+    <div class="card">
+        <p>
+            A Konecta nasceu em 2018 com o sonho de levar internet de qualidade e acessível a regiões carentes de infraestrutura. Começamos com uma pequena rede de fibra local e rapidamente crescemos graças ao nosso foco incansável na qualidade do atendimento e na estabilidade do serviço. Hoje, somos uma operadora em plena expansão, dedicada a simplificar a tecnologia e colocá-la a serviço do seu dia a dia.
+        </p>
+        <button class="secondary-btn">Conheça Nossos Valores</button>
+    </div>
+</section>
+
+<footer>
+    <p>Siga-nos nas redes sociais:</p>
+    <img th:src="@{/img/email.png}" alt="Email Konecta">
+    <img th:src="@{/img/face.png}" alt="Facebook Konecta">
+    <img th:src="@{/img/linkedin.png}" alt="LinkedIn Konecta">
+    <img th:src="@{/img/instagram.png}" alt="Instagram Konecta">
+    <p>&copy; 2025 Konecta. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+    // --- LÓGICA DE SIMULAÇÃO (MANTIDA) ---
+
+    function simularInternet() {
+        const gb = document.getElementById('gb').value;
+        const resultDiv = document.getElementById('internet-result');
+        let preco;
+        let plano;
+
+        if (gb <= 10) {
+            plano = 'Básico (10GB)';
+            preco = 29.90;
+        } else if (gb <= 50) {
+            plano = 'Intermediário (50GB)';
+            preco = 49.90;
+        } else {
+            plano = 'Premium (100GB+)';
+            preco = 79.90;
+        }
+
+        // Uso de icon/emoji para feedback visual
+        resultDiv.innerHTML = `🌟 **Plano Sugerido:** ${plano}. Valor estimado: R$ ${preco.toFixed(2)}/mês.`;
+        resultDiv.style.display = 'block';
+    }
+
+    function simularTV() {
+        const canais = document.getElementById('tv').value;
+        const resultDiv = document.getElementById('tv-result');
+        let preco;
+        let pacote;
+
+        if (canais < 50) {
+            pacote = 'Essencial (30 Canais)';
+            preco = 59.00;
+        } else if (canais < 150) {
+            pacote = 'Família (120 Canais)';
+            preco = 99.00;
+        } else {
+            pacote = 'Máximo (200+ Canais HD)';
+            preco = 149.00;
+        }
+
+        // Uso de icon/emoji para feedback visual
+        resultDiv.innerHTML = `📺 **Pacote Sugerido:** ${pacote}. Valor estimado: R$ ${preco.toFixed(2)}/mês.`;
+        resultDiv.style.display = 'block';
+    }
+</script>
+</body>
+</html>
